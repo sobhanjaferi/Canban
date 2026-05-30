@@ -14,7 +14,7 @@ export default function RootLayout({
 }>): ReactNode {
     return (
         <html lang='en'>
-        <body className='min-h-full flex flex-col'>{children}</body>
+        <body className='container mx-auto flex flex-col bg-gray-200 text-gray-800'>{children}</body>
         </html>
     );
 }
