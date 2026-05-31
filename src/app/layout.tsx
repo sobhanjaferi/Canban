@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { ReactNode } from "react";
 import Header from "@/features/header/Header";
+import Footer from "@/features/footer/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,10 +16,12 @@ export default function RootLayout({
 }>): ReactNode {
   return (
     <html lang="en">
-      <body className="container mx-auto flex flex-col bg-gray-200 text-gray-800">
+      <body className="container mx-auto min-h-screen flex flex-col bg-gray-200 text-gray-800">
         <Header />
 
-        {children}
+        <main className={"flex-1"}>{children}</main>
+
+        <Footer />
       </body>
     </html>
   );
