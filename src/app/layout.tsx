@@ -16,7 +16,7 @@ export default function RootLayout({
 }>): ReactNode {
    return (
       <html lang="en">
-         <body className="container mx-auto min-h-screen flex flex-col bg-gray-200 text-gray-700">
+         <body className="container mx-auto min-h-screen flex flex-col bg-gray-300 text-gray-700">
             <Header />
 
             <main className={"flex-1"}>{children}</main>
