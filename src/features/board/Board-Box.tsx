@@ -10,14 +10,14 @@ interface Props {
 
 export default function BoardBox(prop: Props): ReactElement {
    return (
-      <section className={"min-h-70 rounded-lg bg-white col-span-1"}>
+      <section className={"min-h-50 rounded-lg bg-white col-span-1"}>
          <div
-            className={`rounded-t-lg p-5
-        ${prop.color === "gray" && "bg-gray-500"}
-        ${prop.color === "blue" && "bg-blue-500"}
-        ${prop.color === "red" && "bg-red-500"}
-        ${prop.color === "green" && "bg-green-500"}
-        ${prop.color === "yellow" && "bg-yellow-500"}`}
+            className={`rounded-t-lg p-4
+        ${prop.color === "gray" && "bg-gray-400"}
+        ${prop.color === "blue" && "bg-blue-400"}
+        ${prop.color === "red" && "bg-red-400"}
+        ${prop.color === "green" && "bg-green-400"}
+        ${prop.color === "yellow" && "bg-yellow-400"}`}
          ></div>
 
          <div className={"flex justify-between items-center p-5"}>
@@ -25,9 +25,9 @@ export default function BoardBox(prop: Props): ReactElement {
 
             <Link
                href={`board/${prop.id}`}
-               className={"text-blue-700 text-xl font-bold border-b"}
+               className={"text-blue-500 text-xl border-b"}
             >
-               View Detail
+               View
             </Link>
          </div>
 
