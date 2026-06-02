@@ -1,6 +1,6 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, memo, ReactNode } from "react";
 
-export default function IconButton({
+const IconButton = memo(function IconButton({
   children,
   ...anotherProps
 }: ComponentProps<"button">): ReactNode {
@@ -12,4 +12,6 @@ export default function IconButton({
       {children}
     </button>
   );
-}
+});
+
+export default IconButton;

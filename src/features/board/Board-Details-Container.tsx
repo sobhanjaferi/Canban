@@ -8,6 +8,7 @@ import IconButton from "@/components/Icon-Button";
 import BoardDetailList from "@/features/board/Board-detail-list";
 import { listsData } from "@/data/lists-data";
 import { ListType } from "@/types/List";
+import { ListItemType } from "@/types/List-Item";
 
 export default function BoardDeatilsContainer(): ReactNode {
   const [lists, setLists] = useState<ListType[]>(listsData);
@@ -94,6 +95,24 @@ export default function BoardDeatilsContainer(): ReactNode {
     });
   };
 
+  const handleCreateButtonClick = (): void => {
+    setLists((old) => {
+      const clone = [...old];
+
+      const newItem: ListItemType = {
+        id: globalThis.crypto.randomUUID(),
+        title: globalThis.crypto.randomUUID(),
+      };
+
+      clone[0] = {
+        ...clone[0],
+        items: [...clone[0].items, { id: newItem.id, title: newItem.title }],
+      };
+
+      return clone;
+    });
+  };
+
   return (
     <div className="flex flex-col gap-3 p-3 sm:p-0">
       <section className="bg-gray-200 py-2 px-3 rounded-lg shadow flex justify-between items-center">
@@ -121,7 +140,7 @@ export default function BoardDeatilsContainer(): ReactNode {
             <HiOutlinePencilAlt className="text-2xl" />
           </IconButton>
 
-          <IconButton>
+          <IconButton onClick={handleCreateButtonClick}>
             <HiOutlinePlusSm className="text-3xl" />
           </IconButton>
         </section>
