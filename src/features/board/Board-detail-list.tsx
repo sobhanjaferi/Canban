@@ -1,15 +1,20 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import BoardDetailBox from "./Board-detail-box";
 import { ListType } from "@/types/List";
 import { listsData } from "@/data/lists-data";
 
-export default function BoardDetailList(): ReactNode {
-  const [lists] = useState<ListType[]>(listsData);
+type Props = {
+  setActiveListId: Dispatch<SetStateAction<string | null>>;
+  setActiveListItemId: Dispatch<SetStateAction<string | null>>;
+};
 
-  const [activeListId, setActiveListId] = useState<string>();
-  const [activeListItemId, setActiveListItemId] = useState<string>();
+export default function BoardDetailList({
+  setActiveListId,
+  setActiveListItemId,
+}: Props): ReactNode {
+  const [lists] = useState<ListType[]>(listsData);
 
   const handleActiveButtonClick = (ListId: string, ItemId: string): void => {
     setActiveListId(ListId);
