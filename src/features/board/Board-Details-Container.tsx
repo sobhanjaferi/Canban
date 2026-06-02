@@ -66,6 +66,34 @@ export default function BoardDeatilsContainer(): ReactNode {
     });
   };
 
+  const handleRemoveButtonClick = (): void => {
+    setLists((old) => {
+      const activeListIndex = lists.findIndex(
+        (list) => list.id === activeListId,
+      );
+
+      if (activeListIndex === -1) {
+        console.error("can not find desierd list.");
+
+        return old;
+      }
+
+      const clone = [...old];
+      const activeListClone = {
+        ...clone[activeListIndex],
+        items: [...clone[activeListIndex].items],
+      };
+
+      const deletedItem = activeListClone.items.filter(
+        (item) => item.id !== activeListItemId,
+      );
+
+      clone[activeListIndex].items = deletedItem;
+
+      return clone;
+    });
+  };
+
   return (
     <div className="flex flex-col gap-3 p-3 sm:p-0">
       <section className="bg-gray-200 py-2 px-3 rounded-lg shadow flex justify-between items-center">
@@ -85,7 +113,7 @@ export default function BoardDeatilsContainer(): ReactNode {
                   </Button>
                 ))}
 
-              <Button>Remove</Button>
+              <Button onClick={handleRemoveButtonClick}>Remove</Button>
             </section>
           )}
 
