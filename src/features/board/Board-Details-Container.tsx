@@ -1,13 +1,70 @@
+"use client";
+
 import { ReactNode, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import Button from "@/components/Button";
 import IconButton from "@/components/Icon-Button";
 import BoardDetailList from "@/features/board/Board-detail-list";
+import { listsData } from "@/data/lists-data";
+import { ListType } from "@/types/List";
 
 export default function BoardDeatilsContainer(): ReactNode {
+  const [lists, setLists] = useState<ListType[]>(listsData);
+
   const [activeListId, setActiveListId] = useState<string | null>(null);
   const [activeListItemId, setActiveListItemId] = useState<string | null>(null);
+
+  const handleActiveButtonClick = (ListId: string, ItemId: string): void => {
+    setActiveListId(ListId);
+    setActiveListItemId(ItemId);
+  };
+
+  const handleMoveButtonClick = (destinationId: string): void => {
+    setLists((old) => {
+      const activeListIndex = old.findIndex((list) => list.id === activeListId);
+
+      const destinationListIndex = old.findIndex(
+        (list) => list.id === destinationId,
+      );
+
+      if (activeListIndex === -1 || destinationListIndex === -1) {
+        console.error("can not find desired list.");
+
+        return old;
+      }
+
+      const clone = [...old];
+
+      const listClone = {
+        ...clone[activeListIndex],
+        items: [...clone[activeListIndex].items],
+      };
+
+      const destinationListClone = {
+        ...clone[destinationListIndex],
+        items: [...clone[destinationListIndex].items],
+      };
+
+      const activeListItemIndex = listClone.items.findIndex(
+        (item) => item.id === activeListItemId,
+      );
+
+      if (activeListItemIndex === -1) {
+        console.error("can not find desired list item.");
+
+        return old;
+      }
+
+      const [activeItem] = listClone.items.splice(activeListItemIndex, 1);
+      destinationListClone.items.push(activeItem);
+
+      clone[activeListIndex] = listClone;
+      clone[destinationListIndex] = destinationListClone;
+
+      return clone;
+    });
+  };
 
   return (
     <div className="flex flex-col gap-3 p-3 sm:p-0">
@@ -17,17 +74,18 @@ export default function BoardDeatilsContainer(): ReactNode {
         <section className="flex justify-center items-center gap-3">
           {activeListId !== null && activeListItemId !== null && (
             <section className="flex jus items-center gap-5">
-              <Button color="blue" variant="solid">
-                Doing
-              </Button>
+              {lists
+                .filter((list) => list.id != activeListId)
+                .map((list) => (
+                  <Button
+                    key={list.id}
+                    onClick={() => handleMoveButtonClick(list.id)}
+                  >
+                    {list.title}
+                  </Button>
+                ))}
 
-              <Button color="blue" variant="solid">
-                Done
-              </Button>
-
-              <Button color="blue" variant="solid">
-                Remove
-              </Button>
+              <Button>Remove</Button>
             </section>
           )}
 
@@ -41,10 +99,7 @@ export default function BoardDeatilsContainer(): ReactNode {
         </section>
       </section>
 
-      <BoardDetailList
-        setActiveListId={setActiveListId}
-        setActiveListItemId={setActiveListItemId}
-      />
+      <BoardDetailList lists={lists} onClick={handleActiveButtonClick} />
     </div>
   );
 }
