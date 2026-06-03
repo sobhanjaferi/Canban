@@ -67,11 +67,9 @@ export default function BoardDeatilsContainer(): ReactNode {
     });
   };
 
-  const handleRemoveButtonClick = (): void => {
+  const handleRemoveListItem = (listId: string, itemId: string): void => {
     setLists((old) => {
-      const activeListIndex = lists.findIndex(
-        (list) => list.id === activeListId,
-      );
+      const activeListIndex = lists.findIndex((list) => list.id === listId);
 
       if (activeListIndex === -1) {
         console.error("can not find desierd list.");
@@ -86,7 +84,7 @@ export default function BoardDeatilsContainer(): ReactNode {
       };
 
       const deletedItem = activeListClone.items.filter(
-        (item) => item.id !== activeListItemId,
+        (item) => item.id !== itemId,
       );
 
       clone[activeListIndex].items = deletedItem;
@@ -132,7 +130,7 @@ export default function BoardDeatilsContainer(): ReactNode {
                   </Button>
                 ))}
 
-              <Button onClick={handleRemoveButtonClick}>Remove</Button>
+              {/* <Button onClick={handleRemoveButtonClick}>Remove</Button> */}
             </section>
           )}
 
@@ -146,7 +144,7 @@ export default function BoardDeatilsContainer(): ReactNode {
         </section>
       </section>
 
-      <BoardDetailList lists={lists} onClick={handleActiveButtonClick} />
+      <BoardDetailList lists={lists} onClick={handleActiveButtonClick} onRemove={handleRemoveListItem} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ const IconButton = memo(function IconButton({
   return (
     <button
       {...anotherProps}
-      className="cursor-pointer active:opacity-10 p-1 rounded-full hover:bg-gray-300"
+      className={`p-1 text-sm rounded-full cursor-pointer active:opacity-2 aspect-square hover:bg-gray-400/50 ${anotherProps?.className}`}
     >
       {children}
     </button>
