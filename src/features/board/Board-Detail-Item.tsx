@@ -1,27 +1,28 @@
 "use client";
 
 import IconButton from "@/components/Icon-Button";
+import { ListsContext } from "@/context/ListsContext";
 import { ListItemType } from "@/types/List-Item";
-import { MouseEvent, ReactNode, useState } from "react";
+import { MouseEvent, ReactNode, use, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 
 type Props = {
   listId: string;
   item: ListItemType;
   onClick?: (ListId: string, ItemId: string) => void;
-  onRemove?: (ListId: string, ItemId: string) => void;
 };
 
 export default function BoardDetailItem({
   listId,
   item,
   onClick,
-  onRemove,
 }: Props): ReactNode {
+  const { remove } = use(ListsContext);
+
   const handleRemoveButtonClick = (e: MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation();
 
-    onRemove?.(listId, item.id);
+    remove(listId, item.id);
   };
 
   const [mouseEnter, setMouseEnter] = useState<boolean>(false);

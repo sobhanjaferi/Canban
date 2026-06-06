@@ -1,17 +1,15 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, use, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import Button from "@/components/Button";
 import IconButton from "@/components/Icon-Button";
 import BoardDetailList from "@/features/board/Board-detail-list";
-import { listsData } from "@/data/lists-data";
-import { ListType } from "@/types/List";
-import { ListItemType } from "@/types/List-Item";
+import { ListsContext } from "@/context/ListsContext";
 
-export default function BoardDeatilsContainer(): ReactNode {
-  const [lists, setLists] = useState<ListType[]>(listsData);
+export default function BoardDetailsContainer(): ReactNode {
+  const { lists, create, move } = use(ListsContext);
 
   const [activeListId, setActiveListId] = useState<string | null>(null);
   const [activeListItemId, setActiveListItemId] = useState<string | null>(null);
@@ -22,93 +20,16 @@ export default function BoardDeatilsContainer(): ReactNode {
   };
 
   const handleMoveButtonClick = (destinationId: string): void => {
-    setLists((old) => {
-      const activeListIndex = old.findIndex((list) => list.id === activeListId);
+    if (activeListId && activeListItemId) {
+      move(activeListId, activeListItemId, destinationId);
+    }
 
-      const destinationListIndex = old.findIndex(
-        (list) => list.id === destinationId,
-      );
-
-      if (activeListIndex === -1 || destinationListIndex === -1) {
-        console.error("can not find desired list.");
-
-        return old;
-      }
-
-      const clone = [...old];
-
-      const listClone = {
-        ...clone[activeListIndex],
-        items: [...clone[activeListIndex].items],
-      };
-
-      const destinationListClone = {
-        ...clone[destinationListIndex],
-        items: [...clone[destinationListIndex].items],
-      };
-
-      const activeListItemIndex = listClone.items.findIndex(
-        (item) => item.id === activeListItemId,
-      );
-
-      if (activeListItemIndex === -1) {
-        console.error("can not find desired list item.");
-
-        return old;
-      }
-
-      const [activeItem] = listClone.items.splice(activeListItemIndex, 1);
-      destinationListClone.items.push(activeItem);
-
-      clone[activeListIndex] = listClone;
-      clone[destinationListIndex] = destinationListClone;
-
-      return clone;
-    });
-  };
-
-  const handleRemoveListItem = (listId: string, itemId: string): void => {
-    setLists((old) => {
-      const activeListIndex = lists.findIndex((list) => list.id === listId);
-
-      if (activeListIndex === -1) {
-        console.error("can not find desierd list.");
-
-        return old;
-      }
-
-      const clone = [...old];
-      const activeListClone = {
-        ...clone[activeListIndex],
-        items: [...clone[activeListIndex].items],
-      };
-
-      const deletedItem = activeListClone.items.filter(
-        (item) => item.id !== itemId,
-      );
-
-      clone[activeListIndex].items = deletedItem;
-
-      return clone;
-    });
+    setActiveListId(null);
+    setActiveListItemId(null);
   };
 
   const handleCreateButtonClick = (): void => {
-    setLists((old) => {
-      const clone = [...old];
-
-      const newItem: ListItemType = {
-        id: globalThis.crypto.randomUUID(),
-        title: globalThis.crypto.randomUUID(),
-      };
-
-      clone[0] = {
-        ...clone[0],
-        items: [...clone[0].items, { id: newItem.id, title: newItem.title }],
-      };
-
-      return clone;
-    });
+    create();
   };
 
   return (
@@ -144,7 +65,7 @@ export default function BoardDeatilsContainer(): ReactNode {
         </section>
       </section>
 
-      <BoardDetailList lists={lists} onClick={handleActiveButtonClick} onRemove={handleRemoveListItem} />
+      <BoardDetailList lists={lists} onClick={handleActiveButtonClick} />
     </div>
   );
 }
