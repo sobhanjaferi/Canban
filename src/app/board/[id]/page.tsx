@@ -18,12 +18,10 @@ export async function generateMetadata({
 
 export default function Page(): ReactElement {
   return (
-    <div>
-      <ListsProvider>
-        <ActiveListProvider>
-          <BoardDeatilsContainer />
-        </ActiveListProvider>
-      </ListsProvider>
-    </div>
+    <ListsProvider>
+      <ActiveListProvider>
+        <BoardDeatilsContainer />
+      </ActiveListProvider>
+    </ListsProvider>
   );
 }
