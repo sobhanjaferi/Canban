@@ -1,4 +1,5 @@
 import BoardDeatilsContainer from "@/features/board/Board-Details-Container";
+import ActiveListProvider from "@/providers/ActiveListsProvider";
 import ListsProvider from "@/providers/ListsProvider";
 import { Metadata } from "next";
 import { ReactElement } from "react";
@@ -19,7 +20,9 @@ export default function Page(): ReactElement {
   return (
     <div>
       <ListsProvider>
-        <BoardDeatilsContainer />
+        <ActiveListProvider>
+          <BoardDeatilsContainer />
+        </ActiveListProvider>
       </ListsProvider>
     </div>
   );

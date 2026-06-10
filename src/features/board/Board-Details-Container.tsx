@@ -1,31 +1,25 @@
 "use client";
 
-import { ReactNode, use, useState } from "react";
+import { ReactNode, use } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import Button from "@/components/Button";
 import IconButton from "@/components/Icon-Button";
 import BoardDetailList from "@/features/board/Board-detail-list";
 import { ListsContext } from "@/context/ListsContext";
+import { ActiveListContext } from "@/context/ActiveListContext";
 
 export default function BoardDetailsContainer(): ReactNode {
   const { lists, create, move } = use(ListsContext);
-
-  const [activeListId, setActiveListId] = useState<string | null>(null);
-  const [activeListItemId, setActiveListItemId] = useState<string | null>(null);
-
-  const handleActiveButtonClick = (ListId: string, ItemId: string): void => {
-    setActiveListId(ListId);
-    setActiveListItemId(ItemId);
-  };
+  const { activeListId, activeListItemId, handleDeactiveButtonClick } =
+    use(ActiveListContext);
 
   const handleMoveButtonClick = (destinationId: string): void => {
     if (activeListId && activeListItemId) {
       move(activeListId, activeListItemId, destinationId);
     }
 
-    setActiveListId(null);
-    setActiveListItemId(null);
+    handleDeactiveButtonClick();
   };
 
   const handleCreateButtonClick = (): void => {
@@ -65,7 +59,7 @@ export default function BoardDetailsContainer(): ReactNode {
         </section>
       </section>
 
-      <BoardDetailList lists={lists} onClick={handleActiveButtonClick} />
+      <BoardDetailList lists={lists} />
     </div>
   );
 }
