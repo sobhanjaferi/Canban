@@ -8,6 +8,7 @@ import IconButton from "@/components/Icon-Button";
 import BoardDetailList from "@/features/board/Board-detail-list";
 import { ListsContext } from "@/context/ListsContext";
 import { ActiveListContext } from "@/context/ActiveListContext";
+import { Slide, toast } from "react-toastify";
 
 export default function BoardDetailsContainer(): ReactNode {
   const { lists, create, move } = use(ListsContext);
@@ -17,6 +18,14 @@ export default function BoardDetailsContainer(): ReactNode {
   const handleMoveButtonClick = (destinationId: string): void => {
     if (activeListId && activeListItemId) {
       move(activeListId, activeListItemId, destinationId);
+
+      toast.success("Item Moved Successfully", {
+        autoClose: 2000,
+        theme: "light",
+        pauseOnHover: true,
+        transition: Slide,
+        position : "bottom-right"
+      });
     }
 
     handleDeactiveButtonClick();
@@ -44,8 +53,6 @@ export default function BoardDetailsContainer(): ReactNode {
                     {list.title}
                   </Button>
                 ))}
-
-              {/* <Button onClick={handleRemoveButtonClick}>Remove</Button> */}
             </section>
           )}
 
@@ -53,7 +60,20 @@ export default function BoardDetailsContainer(): ReactNode {
             <HiOutlinePencilAlt className="text-2xl" />
           </IconButton>
 
-          <IconButton onClick={handleCreateButtonClick}>
+          <IconButton
+            onClick={() => {
+              toast.success("Item Created Successfully", {
+                position: "bottom-right",
+                autoClose: 1000,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "light",
+                transition: Slide,
+              });
+
+              handleCreateButtonClick();
+            }}
+          >
             <HiOutlinePlusSm className="text-3xl" />
           </IconButton>
         </section>

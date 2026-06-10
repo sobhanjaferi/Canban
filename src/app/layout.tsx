@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { ReactNode } from "react";
 import Header from "@/features/header/Header";
 import Footer from "@/features/footer/Footer";
+import { ToastContainer, Zoom } from "react-toastify";
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +23,23 @@ export default function RootLayout({
       <body className="container mx-auto min-h-screen flex flex-col bg-gray-300 text-gray-700">
         <Header />
 
-        <main className={"flex-1"}>{children}</main>
+        <main className={"flex-1"}>
+          {children}
+
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Zoom}
+          />
+        </main>
 
         <Footer />
       </body>

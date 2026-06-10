@@ -6,6 +6,7 @@ import { ListsContext } from "@/context/ListsContext";
 import { ListItemType } from "@/types/List-Item";
 import { MouseEvent, ReactNode, use, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
+import { Slide, toast } from "react-toastify";
 
 type Props = {
   listId: string;
@@ -23,6 +24,14 @@ export default function BoardDetailItem({ listId, item }: Props): ReactNode {
     remove(listId, item.id);
 
     handleDeactiveButtonClick();
+
+    toast.success("Item Removed Successfully", {
+      position: "bottom-right",
+      autoClose: 2000,
+      pauseOnHover: true,
+      theme: "light",
+      transition: Slide,
+    });
   };
 
   const [mouseEnter, setMouseEnter] = useState<boolean>(false);
