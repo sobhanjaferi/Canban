@@ -24,7 +24,7 @@ export default function BoardDetailsContainer(): ReactNode {
         theme: "light",
         pauseOnHover: true,
         transition: Slide,
-        position : "bottom-right"
+        position: "bottom-right",
       });
     }
 

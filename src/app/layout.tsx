@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import Header from "@/features/header/Header";
 import Footer from "@/features/footer/Footer";
 import { ToastContainer, Zoom } from "react-toastify";
+import Toaster from "@/components/toaster";
 
 export const metadata: Metadata = {
   title: {
@@ -25,20 +26,7 @@ export default function RootLayout({
 
         <main className={"flex-1"}>
           {children}
-
-          <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            transition={Zoom}
-          />
+          <Toaster />
         </main>
 
         <Footer />
