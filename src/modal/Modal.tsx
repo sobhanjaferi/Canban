@@ -1,7 +1,7 @@
 "use client";
 
 import IconButton from "@/components/Icon-Button";
-import { ComponentProps, ReactElement, RefObject } from "react";
+import { ComponentProps, MouseEvent, ReactElement, RefObject } from "react";
 import { IoMdClose } from "react-icons/io";
 
 type Props = ComponentProps<"dialog"> & {
@@ -14,14 +14,24 @@ function Modal({
   children,
   className,
   ref,
+  onClick,
   ...otherProps
 }: Props): ReactElement {
   const handleCloseButtonClick = (): void => {
     ref.current?.close();
   };
 
+  const handleDialogClick = (e: MouseEvent<HTMLDialogElement>): void => {
+    if (e.target === e.currentTarget) {
+      ref.current?.close();
+    }
+
+    onClick?.(e);
+  };
+
   return (
     <dialog
+      onClick={handleDialogClick}
       className={`min-w-90 max-w-200 m-auto rounded-lg text-gray-800 font-bold ${className}`}
       {...otherProps}
       ref={ref}
