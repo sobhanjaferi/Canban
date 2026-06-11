@@ -1,9 +1,8 @@
 "use client";
 
 import Button from "@/components/Button";
-import TextInput from "@/components/TextInput";
+import CreateListItemModal from "@/components/CreateListItemModal";
 import BoardDeatilsContainer from "@/features/board/Board-Details-Container";
-import Modal from "@/modal/Modal";
 import ActiveListProvider from "@/providers/ActiveListsProvider";
 import ListsProvider from "@/providers/ListsProvider";
 import { ReactElement, useRef } from "react";
@@ -21,10 +20,7 @@ export default function Page(): ReactElement {
           Open
         </Button>
 
-        <Modal heading="This is heading" ref={ref}>
-          <TextInput label="your gender is male ?" />
-          This is children
-        </Modal>
+        <CreateListItemModal ref={ref} />
 
         <BoardDeatilsContainer />
       </ActiveListProvider>
