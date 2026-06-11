@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import TextInput from "@/components/TextInput";
 import BoardDeatilsContainer from "@/features/board/Board-Details-Container";
 import Modal from "@/modal/Modal";
 import ActiveListProvider from "@/providers/ActiveListsProvider";
@@ -21,6 +22,7 @@ export default function Page(): ReactElement {
         </Button>
 
         <Modal heading="This is heading" ref={ref}>
+          <TextInput label="your gender is male ?" />
           This is children
         </Modal>
 
