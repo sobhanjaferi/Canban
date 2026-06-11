@@ -1,7 +1,6 @@
 "use client";
 
 import { ComponentProps, ReactNode, useId } from "react";
-
 type Props = ComponentProps<"input"> & {
   label: string;
 };
