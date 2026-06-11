@@ -32,7 +32,7 @@ function Modal({
   return (
     <dialog
       onClick={handleDialogClick}
-      className={`min-w-90 max-w-200 m-auto rounded-lg text-gray-800 font-bold ${className}`}
+      className={`min-w-90 max-w-200 m-auto rounded-lg text-gray-800 font-bold ${className} backdrop:bg-black/50 backdrop:backdrop-blur-[2px] `}
       {...otherProps}
       ref={ref}
     >
