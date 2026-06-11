@@ -1,25 +1,29 @@
+"use client";
+
+import Button from "@/components/Button";
 import BoardDeatilsContainer from "@/features/board/Board-Details-Container";
+import Modal from "@/modal/Modal";
 import ActiveListProvider from "@/providers/ActiveListsProvider";
 import ListsProvider from "@/providers/ListsProvider";
-import { Metadata } from "next";
-import { ReactElement } from "react";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
-  const { id } = await params;
-
-  return {
-    title: `Board / ${id}`,
-  };
-}
+import { ReactElement, useRef } from "react";
 
 export default function Page(): ReactElement {
+  const ref = useRef<HTMLDialogElement>(null);
+
+  const handleOpenButtonClick = (): void => {
+    ref.current?.showModal();
+  };
   return (
     <ListsProvider>
       <ActiveListProvider>
+        <Button color="blue" onClick={handleOpenButtonClick}>
+          Open
+        </Button>
+
+        <Modal heading="This is heading" ref={ref}>
+          This is children
+        </Modal>
+
         <BoardDeatilsContainer />
       </ActiveListProvider>
     </ListsProvider>
