@@ -8,6 +8,7 @@ interface Props extends ComponentProps<"button"> {
 const Button = memo(function Button({
   color = "gray",
   variant = "solid",
+  className,
   children,
   ...otherProps
 }: Props): ReactNode {
@@ -19,6 +20,7 @@ const Button = memo(function Button({
           ${color === "gray" && variant === "solid" && "bg-gray-400 text-white"}
           ${color === "blue" && variant === "outline" && "bg-blue-200 border-2 border-blue-500 text-blue-700"}
           ${color === "blue" && variant === "solid" && "bg-blue-500 text-white"}
+          ${className}
         `}
     >
       {children}

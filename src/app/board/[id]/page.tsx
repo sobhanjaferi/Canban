@@ -16,11 +16,11 @@ export default function Page(): ReactElement {
   return (
     <ListsProvider>
       <ActiveListProvider>
-        <Button color="blue" onClick={handleOpenButtonClick}>
+        <Button color="blue" onClick={handleOpenButtonClick} className={"mb-2"}>
           Open
         </Button>
 
-        <CreateListItemModal ref={ref} />
+        <CreateListItemModal ref={ref} listId="1" />
 
         <BoardDeatilsContainer />
       </ActiveListProvider>

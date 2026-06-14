@@ -3,7 +3,6 @@ import "@/styles/globals.css";
 import { ReactNode } from "react";
 import Header from "@/features/header/Header";
 import Footer from "@/features/footer/Footer";
-import { ToastContainer, Zoom } from "react-toastify";
 import Toaster from "@/components/toaster";
 
 export const metadata: Metadata = {

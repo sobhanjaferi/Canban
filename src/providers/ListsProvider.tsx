@@ -11,19 +11,25 @@ export default function ListsProvider({
 }: PropsWithChildren): ReactNode {
   const [lists, setLists] = useState<ListType[]>(listsData);
 
-  const create = (): void => {
+  const create = (listId: string, item: ListItemType): void => {
     setLists((old) => {
+      const activeListIndex = old.findIndex((list) => list.id === listId);
+
+      if (activeListIndex === -1) {
+        console.error("can not find desired list.");
+
+        return old;
+      }
+
       const clone = [...old];
-
-      const newItem: ListItemType = {
-        id: globalThis.crypto.randomUUID(),
-        title: globalThis.crypto.randomUUID(),
+      const activeListClone = {
+        ...clone[activeListIndex],
+        items: [...clone[activeListIndex].items],
       };
 
-      clone[0] = {
-        ...clone[0],
-        items: [...clone[0].items, { id: newItem.id, title: newItem.title }],
-      };
+      activeListClone.items.push(item);
+
+      clone[activeListIndex] = activeListClone;
 
       return clone;
     });
@@ -34,7 +40,7 @@ export default function ListsProvider({
       const activeListIndex = old.findIndex((list) => list.id === listId);
 
       if (activeListIndex === -1) {
-        console.error("can not find desierd list.");
+        console.error("can not find desired list.");
 
         return old;
       }

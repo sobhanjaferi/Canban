@@ -1,20 +1,16 @@
 import { ReactNode } from "react";
-import { ToastContainer, Zoom } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 
 function Toaster(): ReactNode {
   return (
     <ToastContainer
-      position="top-center"
+      position="bottom-right"
       autoClose={2000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick={false}
-      rtl={false}
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="dark"
-      transition={Zoom}
+      theme="light"
+      transition={Slide}
     />
   );
 }

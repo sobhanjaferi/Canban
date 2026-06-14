@@ -1,11 +1,12 @@
 "use client";
 
 import { ListType } from "@/types/List";
+import { ListItemType } from "@/types/List-Item";
 import { createContext } from "react";
 
 type ListsContextType = {
   lists: ListType[];
-  create: () => void;
+  create: (listId: string, item: ListItemType) => void;
   remove: (listId: string, itemId: string) => void;
   move: (fromListId: string, itemId: string, toListId: string) => void;
 };
