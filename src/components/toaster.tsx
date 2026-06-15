@@ -4,7 +4,7 @@ import { Slide, ToastContainer } from "react-toastify";
 function Toaster(): ReactNode {
   return (
     <ToastContainer
-      position="bottom-right"
+      position="top-center"
       autoClose={2000}
       pauseOnFocusLoss
       draggable

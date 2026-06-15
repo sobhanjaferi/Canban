@@ -25,13 +25,7 @@ export default function BoardDetailItem({ listId, item }: Props): ReactNode {
 
     handleDeactiveButtonClick();
 
-    toast.success("Item Removed Successfully", {
-      position: "bottom-right",
-      autoClose: 2000,
-      pauseOnHover: true,
-      theme: "light",
-      transition: Slide,
-    });
+    toast.success("Item Removed Successfully");
   };
 
   const [mouseEnter, setMouseEnter] = useState<boolean>(false);
