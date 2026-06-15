@@ -3,9 +3,15 @@
 import { ComponentProps, ReactNode, useId } from "react";
 type Props = ComponentProps<"input"> & {
   label: string;
+  error?: string | null;
 };
 
-function TextInput({ className, label, ...otherProps }: Props): ReactNode {
+function TextInput({
+  className,
+  label,
+  error,
+  ...otherProps
+}: Props): ReactNode {
   const id = useId();
 
   return (
@@ -17,6 +23,8 @@ function TextInput({ className, label, ...otherProps }: Props): ReactNode {
         {...otherProps}
         className="p-1 rounded-sm outline outline-gray-600 focus:outline-2 focus:outline-blue-500"
       />
+
+      <span className={"text-red-500"}>{error}</span>
     </div>
   );
 }
