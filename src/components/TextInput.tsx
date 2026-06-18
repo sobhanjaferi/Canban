@@ -24,7 +24,7 @@ function TextInput({
         className="p-1 rounded-sm outline outline-gray-600 focus:outline-2 focus:outline-blue-500"
       />
 
-      <span className={"text-red-500"}>{error}</span>
+      <span className={"text-red-500"}>{error} &nbsp;</span>
     </div>
   );
 }
