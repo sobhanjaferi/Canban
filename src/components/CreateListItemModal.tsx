@@ -2,6 +2,7 @@
 
 import Modal from "@/modal/Modal";
 import {
+  ChangeEvent,
   ComponentProps,
   FormEvent,
   ReactNode,
@@ -27,23 +28,38 @@ function CreateListItemModal({
   const { create } = use(ListsContext);
 
   const [titleError, setTitleError] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [shouldValidateOnChange, setShouldValidateOnChange] =
+    useState<boolean>(false);
+
   const forRef = useRef<HTMLFormElement | null>(null);
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value.trim();
+
+    if (shouldValidateOnChange) {
+      validateTitle(value);
+    }
+
+    setTitle(value);
+  };
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const id = globalThis.crypto.randomUUID();
-    const title = formData.get("title") as string;
+    setShouldValidateOnChange(true);
 
     if (!validateTitle(title)) {
       return;
     }
 
+    const id = globalThis.crypto.randomUUID();
     create(listId, { id, title });
     toast.success("Item Created Successfully");
 
     ref.current?.close();
+
+    setTitle("");
   };
 
   const handleCancelButtonClick = (): void => {
@@ -56,18 +72,18 @@ function CreateListItemModal({
     forRef.current?.reset();
   };
 
-  const validateTitle = (title: unknown): boolean => {
-    if (typeof title !== "string") {
-      setTitleError("Title should be a string!");
-
-      return false;
-    } else if (title.trim().length === 0) {
+  const validateTitle = (title: string): boolean => {
+    if (title.length === 0) {
       setTitleError("Title cannot be empty!");
 
       return false;
     }
     setTitleError(null);
     return true;
+  };
+
+  const handleResetForm = (): void => {
+    setTitle("");
   };
 
   return (
@@ -78,8 +94,20 @@ function CreateListItemModal({
       {...otherProps}
       className={`${className}`}
     >
-      <form ref={forRef} className="grid gap-3" onSubmit={handleFormSubmit}>
-        <TextInput label="Title" type="text" name="title" error={titleError} />
+      <form
+        ref={forRef}
+        className="grid gap-3"
+        onReset={handleResetForm}
+        onSubmit={handleFormSubmit}
+      >
+        <TextInput
+          label="Title"
+          type="text"
+          name="title"
+          error={titleError}
+          value={title}
+          onChange={handleTitleChange}
+        />
 
         <section className="flex justify-end gap-2">
           <Button type="reset" onClick={handleCancelButtonClick}>
