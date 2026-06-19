@@ -3,27 +3,12 @@
 import { ReactNode, use } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { HiOutlinePencilAlt } from "react-icons/hi";
-import Button from "@/components/Button";
 import IconButton from "@/components/Icon-Button";
 import BoardDetailList from "@/features/board/Board-detail-list";
 import { ListsContext } from "@/context/ListsContext";
-import { ActiveListContext } from "@/context/ActiveListContext";
-import { toast } from "react-toastify";
 
 export default function BoardDetailsContainer(): ReactNode {
-  const { lists, move } = use(ListsContext);
-  const { activeListId, activeListItemId, handleDeactiveButtonClick } =
-    use(ActiveListContext);
-
-  const handleMoveButtonClick = (destinationId: string): void => {
-    if (activeListId && activeListItemId) {
-      move(activeListId, activeListItemId, destinationId);
-
-      toast.success("Item Moved Successfully");
-    }
-
-    handleDeactiveButtonClick();
-  };
+  const { lists } = use(ListsContext);
 
   return (
     <div className="flex flex-col gap-3 p-3 sm:p-0">
@@ -31,21 +16,6 @@ export default function BoardDetailsContainer(): ReactNode {
         <h1>Board Title</h1>
 
         <section className="flex justify-center items-center gap-3">
-          {activeListId !== null && activeListItemId !== null && (
-            <section className="flex jus items-center gap-5">
-              {lists
-                .filter((list) => list.id != activeListId)
-                .map((list) => (
-                  <Button
-                    key={list.id}
-                    onClick={() => handleMoveButtonClick(list.id)}
-                  >
-                    {list.title}
-                  </Button>
-                ))}
-            </section>
-          )}
-
           <IconButton>
             <HiOutlinePencilAlt className="text-2xl" />
           </IconButton>
