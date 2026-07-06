@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import { ListsContext } from "@/context/ListsContext";
 import { ListType } from "@/types/List";
 import { listsData } from "@/data/lists-data";
@@ -10,6 +10,22 @@ export default function ListsProvider({
   children,
 }: PropsWithChildren): ReactNode {
   const [lists, setLists] = useState<ListType[]>(listsData);
+
+  useEffect(() => {
+    const handleGetListsData = async (): Promise<void> => {
+      const getLists = await localStorage.getItem("listsData");
+
+      if (getLists !== null) {
+        setLists(JSON.parse(getLists));
+      }
+    };
+
+    handleGetListsData();
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("listsData", JSON.stringify(lists));
+  }, [lists]);
 
   const create = (listIndex: number, item: ListItemType): void => {
     setLists((old) => {

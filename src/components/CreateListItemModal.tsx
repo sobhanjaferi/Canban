@@ -54,7 +54,7 @@ function CreateListItemModal({
     }
 
     const id = globalThis.crypto.randomUUID();
-    create(listId, { id, title });
+    create(parseInt(listId), { id, title });
     toast.success("Item Created Successfully");
 
     ref.current?.close();
