@@ -67,53 +67,55 @@ export default function ListsProvider({
     });
   };
 
-  // const move = (fromListId: string, itemId: string, toListId: string): void => {
-  //   setLists((old) => {
-  //     const activeListIndex = old.findIndex((list) => list.id === fromListId);
+  const move = (fromListId: string, itemId: string, toListId: string): void => {
+    setLists((old) => {
+      const activeListIndex = old.findIndex((list) => list.id === fromListId);
 
-  //     const destinationListIndex = old.findIndex(
-  //       (list) => list.id === toListId,
-  //     );
+      const destinationListIndex = old.findIndex(
+        (list) => list.id === toListId,
+      );
 
-  //     if (activeListIndex === -1 || destinationListIndex === -1) {
-  //       console.error("can not find desired list.");
+      if (activeListIndex === -1 || destinationListIndex === -1) {
+        console.error("can not find desired list.");
 
-  //       return old;
-  //     }
+        return old;
+      }
 
-  //     const clone = [...old];
+      const clone = [...old];
 
-  //     const listClone = {
-  //       ...clone[activeListIndex],
-  //       items: [...clone[activeListIndex].items],
-  //     };
+      const listClone = {
+        ...clone[activeListIndex],
+        items: [...clone[activeListIndex].items],
+      };
 
-  //     const destinationListClone = {
-  //       ...clone[destinationListIndex],
-  //       items: [...clone[destinationListIndex].items],
-  //     };
+      const destinationListClone = {
+        ...clone[destinationListIndex],
+        items: [...clone[destinationListIndex].items],
+      };
 
-  //     const activeListItemIndex = listClone.items.findIndex(
-  //       (item) => item.id === itemId,
-  //     );
+      const activeListItemIndex = listClone.items.findIndex(
+        (item) => item.id === itemId,
+      );
 
-  //     if (activeListItemIndex === -1) {
-  //       console.error("can not find desired list item.");
+      if (activeListItemIndex === -1) {
+        console.error("can not find desired list item.");
 
-  //       return old;
-  //     }
+        return old;
+      }
 
-  //     const [activeItem] = listClone.items.splice(activeListItemIndex, 1);
-  //     destinationListClone.items.push(activeItem);
+      const [activeItem] = listClone.items.splice(activeListItemIndex, 1);
+      destinationListClone.items.push(activeItem);
 
-  //     clone[activeListIndex] = listClone;
-  //     clone[destinationListIndex] = destinationListClone;
+      clone[activeListIndex] = listClone;
+      clone[destinationListIndex] = destinationListClone;
 
-  //     return clone;
-  //   });
-  // };
+      return clone;
+    });
+  };
 
   return (
-    <ListsContext value={{ lists, create, remove }}>{children}</ListsContext>
+    <ListsContext value={{ lists, create, remove, move }}>
+      {children}
+    </ListsContext>
   );
 }
